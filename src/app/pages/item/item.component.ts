@@ -15,7 +15,7 @@ export class ItemComponent implements OnInit {
 	id: number;
 	item: Item;
 	form: FormGroup;
-	// items: Item[] = [];
+	items: Item[] = [];
 
 	gender: Gender[] = [ { code: 'F', value: 'Female' }, { code: 'M', value: 'Male' } ];
 
@@ -24,17 +24,19 @@ export class ItemComponent implements OnInit {
 	ngOnInit() {
 		this.id = +this.route.snapshot.paramMap.get('id');
 		this.http.get<Item[]>('http://127.0.0.1:8887/mock-data.json').subscribe((data) => {
-			let items = data as Array<Item>;
-
-			this.item = items.find((i) => i.id === this.id);
-
+			this.items = data as Array<Item>;
+			this.findItem();
 			this.initForm(this.item);
 		});
 	}
 
+	findItem() {
+		this.item = this.items.find((i) => i.id === this.id);
+	}
+
 	initForm(item: Item) {
-		console.log('ITEM', item);
-		console.log('ITEM', item.last_name);
+		// console.log('ITEM', item);
+		// console.log('ITEM', item.last_name);
 
 		let fb = new FormBuilder();
 
@@ -48,15 +50,3 @@ export class ItemComponent implements OnInit {
 		});
 	}
 }
-
-// console.log('ITEM', this.item);
-// 			console.log('ITEM', this.item.last_name);
-
-// 			this.form = fb.group({
-// 				id: [ this.id ],
-// 				first_name: [ this.item.first_name ],
-// 				last_name: [ this.item.last_name ],
-// 				gender: [ this.item.gender ],
-// 				email: [ this.item.email ],
-// 				colour: [ this.item.colour ]
-// 			});

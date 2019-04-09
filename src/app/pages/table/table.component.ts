@@ -26,6 +26,6 @@ export class TableComponent implements OnInit {
 			} finally {
 				this.loading = false;
 			}
-		}, 5000);
+		}, 500);
 	}
 }

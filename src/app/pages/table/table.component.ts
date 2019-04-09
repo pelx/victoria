@@ -9,16 +9,23 @@ import { Item } from '../../models/item';
 })
 export class TableComponent implements OnInit {
 	retrievedData: Item[] = [];
-	isFinished: boolean;
+	loading = true;
 
 	constructor(private httpClient: HttpClient) {}
 
 	ngOnInit() {
+		this.loadData();
+	}
+
+	loadData() {
 		setTimeout(() => {
-			this.httpClient.get<Item[]>('http://127.0.0.1:8887/mock-data.json').subscribe((a) => {
-				this.retrievedData = a;
-			});
-		}, 5);
-		this.isFinished = true;
+			try {
+				this.httpClient.get<Item[]>('http://127.0.0.1:8887/mock-data.json').subscribe((a) => {
+					this.retrievedData = a;
+				});
+			} finally {
+				this.loading = false;
+			}
+		}, 5000);
 	}
 }

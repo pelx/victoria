@@ -15,9 +15,13 @@ export class ItemComponent implements OnInit {
 	id: number;
 	item: Item;
 	form: FormGroup;
+	// items: Item[] = [];
 
 	gender: Gender[] = [ { code: 'F', value: 'Female' }, { code: 'M', value: 'Male' } ];
-	constructor(private http: HttpClient, private route: ActivatedRoute) {
+
+	constructor(private http: HttpClient, private route: ActivatedRoute) {}
+
+	ngOnInit() {
 		this.id = +this.route.snapshot.paramMap.get('id');
 		this.http.get<Item[]>('http://127.0.0.1:8887/mock-data.json').subscribe((data) => {
 			let items = data as Array<Item>;
@@ -27,8 +31,6 @@ export class ItemComponent implements OnInit {
 			this.initForm(this.item);
 		});
 	}
-
-	ngOnInit() {}
 
 	initForm(item: Item) {
 		console.log('ITEM', item);

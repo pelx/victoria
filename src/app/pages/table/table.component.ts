@@ -10,6 +10,7 @@ import { Item } from '../../models/item';
 export class TableComponent implements OnInit {
 	retrievedData: Item[] = [];
 	loading = true;
+	displayedColumns: string[] = [ 'first_name', 'last_name', 'action' ];
 
 	constructor(private httpClient: HttpClient) {}
 
